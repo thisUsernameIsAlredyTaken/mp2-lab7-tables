@@ -7,20 +7,17 @@
 
 class TBalanceNode : public TTreeNode {
   public:
-    TBalanceNode(TKey k="", PTDatValue pval=nullptr,
-            PTTreeNode pl=nullptr,
-            PTTreeNode pr=nullptr,
-            int bal=BalOk);
-
-    PTDatValue GetCopy() override;
-
+    TBalanceNode (TKey k = "", PTDatValue pVal = nullptr,
+            PTTreeNode pL = nullptr, PTTreeNode pR = nullptr, int bal = BalOk):
+            TTreeNode(k, pVal, pL, pR), Balance(bal) {}; 
+    virtual PTDatValue GetCopy();  
     int GetBalance();
     void SetBalance(int bal);
 
   protected:
-    int Balance;
-
+    int Balance; 
+    
     friend class TBalanceTree;
 };
 
-#endif
+#endif 

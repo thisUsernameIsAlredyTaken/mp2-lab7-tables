@@ -5,8 +5,8 @@
 
 using TKey = std::string;
 
-constexpr int TabHashStep =  1;
-constexpr int TabMaxSize  =  500;
+constexpr int TabHashStep = 1;
+constexpr int TabMaxSize  = 500;
 
 constexpr int ListOk    =  0;
 constexpr int ListEmpty = -101;
@@ -16,6 +16,9 @@ constexpr int ListNoPos = -103;
 constexpr int BalLeft  = -1;
 constexpr int BalOk    =  0;
 constexpr int BalRight =  1;
+
+constexpr int HeightOk  = 0;
+constexpr int HeightInc = 1;
 
 enum TLinkPos    {FIRST, CURRENT, LAST};
 enum TDataPos    {FIRST_POS, CURRENT_POS, LAST_POS};
@@ -39,22 +42,22 @@ class TTreeTable;       //
 class TBalanceTree;     //
 class TListHash;        //
 
-using PTDatValue    = PTDatValue*;
-using PTTabRecord   = PTTabRecord*;
-using PTWord        = PTWord*;
-using PTRootLink    = PTRootLink*;
-using PTDatLink     = PTDatLink*;
-using PTDatList     = PTDatList*;
-using PTTable       = PTTable*;
-using PTScanTable   = PTScanTable*;
-using PTSortTable   = PTSortTable*;
-using PTArrayTable  = PTArrayTable*;
-using PTArrayHash   = PTArrayHash*;
-using PTBalanceNode = PTBalanceNode*;
-using PTBalanceTree = PTBalanceTree*;
-using PTHashTable   = PTHashTable*;
-using PTListHash    = PTListHash*;
-using PTTreeNode    = PTTreeNode*;
-using PTTreeTable   = PTTreeTable*;
+using PTDatValue    = TDatValue*;
+using PTTabRecord   = TTabRecord*;
+using PTWord        = TWord*;
+using PTRootLink    = TRootLink*;
+using PTDatLink     = TDatLink*;
+using PTDatList     = TDatList*;
+using PTTable       = TTable*;
+using PTScanTable   = TScanTable*;
+using PTSortTable   = TSortTable*;
+using PTArrayTable  = TArrayTable*;
+using PTArrayHash   = TArrayHash*;
+using PTBalanceNode = TBalanceNode*;
+using PTBalanceTree = TBalanceTree*;
+using PTHashTable   = THashTable*;
+using PTListHash    = TListHash*;
+using PTTreeNode    = TTreeNode*;
+using PTTreeTable   = TTreeTable*;
 
 #endif

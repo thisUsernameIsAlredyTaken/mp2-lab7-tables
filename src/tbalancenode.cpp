@@ -1,5 +1,13 @@
 #include "tbalancenode.h"
 
-TBalanceNode::TBalanceNode(TKey k, PTDatValue pval,
-        PTTreeNode pl, PTTreeNode pr, int bal)
-  : TTreeNode(k, pval, pl, pr), Balance(bal) {}
+PTDatValue TBalanceNode::GetCopy() {
+    return new TBalanceNode(Key, pValue, nullptr, nullptr, 0);
+}
+
+int TBalanceNode::GetBalance() {
+    return Balance;
+}
+
+void TBalanceNode::SetBalance(int bal) {
+    Balance = bal;
+}

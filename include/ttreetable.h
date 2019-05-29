@@ -8,38 +8,37 @@
 
 #include <stack>
 
-class TTreeTable : public TTable {
+class TTreeTable: public TTable {
   public:
-    TTreeTable();
-    ~TTreeTable();
-
-    bool IsFull() override;
-
-    PTDatValue FindRecord(TKey k) override;
-    void InsRecord(TKey k, PTDatValue pval) override;
-    void DelRecord(TKey k) override;
-
-    void Print(PTTreeNode pNode, int depth=0);
-    void Print();
-
-    TKey GetKey() override;
-    PTDatValue GetValuePtr() override;
-
-    void Reset() override;
-    bool IsTabEnded() override;
-    bool GoNext() override;
-
+    TTreeTable(): TTable() {
+        CurrPos = 0;
+        pRoot = pCurrent = nullptr;
+        ppRef = nullptr;
+    }
+    ~TTreeTable() {DeleteTreeTab(pRoot);} 
+    
+    virtual int IsFull(); 
+    
+    virtual PTDatValue FindRecord(TKey k); 
+    virtual void InsRecord(TKey k, PTDatValue pVal); 
+    virtual void DelRecord(TKey k);       
+    void Print(PTTreeNode pNode, int depth = 0);
+    void Print() {Print(pRoot);}
+    
+    virtual TKey GetKey();
+    virtual PTDatValue GetValuePtr();
+    virtual int Reset();  
+    virtual int IsTabEnded(); 
+    virtual int GoNext();
+    
   protected:
-    void DeleteTreeTab(PTTreeNode PNode);
-
-    PTTreeNode PRoot;
-    PTTreeNode *PPRef;
-    PTTreeNode PCurrent;
-    int CurrPos;
-    std::stack<PTTreeNode> St;
+    void DeleteTreeTab (PTTreeNode pNode); 
+    
+    PTTreeNode pRoot; 
+    PTTreeNode *ppRef;
+    PTTreeNode pCurrent;
+    int CurrPos;        
+    std::stack <PTTreeNode> St;
 };
 
-
-
-
-#endif
+#endif 

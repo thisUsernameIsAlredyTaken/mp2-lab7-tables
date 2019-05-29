@@ -7,19 +7,22 @@
 
 class TRootLink {
   public:
-    TRootLink(PTRootLink pn=nullptr);
-
-    PTRootLink GetNextLink();
-    void SetNextLink(PTRootLink pl);
-    void InsNextLink(PTRootLink pl);
-
-    virtual void SetDatValue(PTDatValue) = 0;
+    TRootLink(PTRootLink pN = nullptr) { pNext = pN; }
+    PTRootLink  GetNextLink() { return  pNext; }
+    void SetNextLink(PTRootLink pLink) { pNext = pLink; }
+    void InsNextLink(PTRootLink pLink) {
+        PTRootLink p = pNext;
+        pNext = pLink;
+        if (pLink)
+            pLink->pNext = p;
+    }
+    virtual void SetDatValue(PTDatValue pVal) = 0;
     virtual PTDatValue GetDatValue() = 0;
 
   protected:
-    PTRootLink PNext;
+    PTRootLink pNext;  
 
     friend class TDatList;
 };
 
-#endif
+#endif  

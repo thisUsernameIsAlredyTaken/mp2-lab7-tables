@@ -1,7 +1,5 @@
 #include "ttreenode.h"
 
-TTreeNode::TTreeNode(TKey k, PTDatValue pval,
-        PTTreeNode pl, PTTreeNode pr)
-  : TTabRecord(k, pval), PLeft(pl), PRight(pr) {}
-
-
+PTDatValue TTreeNode::GetCopy() {
+    return new TTreeNode(Key, pValue, nullptr, nullptr);
+}

@@ -5,47 +5,29 @@
 
 #include "tscantable.h"
 
-#include <iostream>
-
 class TSortTable : public TScanTable {
   public:
-    TSortTable(int size=TabMaxSize);
-    TSortTable(const TScanTable &tsc,
-            TSortMethod sm=QUICK_SORT);
-
-    TSortTable& operator=(const TScanTable &tsc);
-
-    TSortMethod GetSortMethod();
+    TSortTable(int Size = TabMaxSize): TScanTable(Size){};
+    TSortTable(TScanTable &tab, TSortMethod sm = QUICK_SORT); 
+    TSortTable &operator=(TScanTable &tab); 
+    TSortMethod GetSortMethod();    
     void SetSortMethod(TSortMethod sm);
-
-    PTDatValue FindRecord(TKey k) override;
-    void InsRecord(TKey k,
-            PTDatValue pval) override;
-    void DelRecord(TKey k) override;
-
-    void Print(std::ostream &os);
+    
+    virtual PTDatValue FindRecord(TKey k); 
+    virtual void InsRecord(TKey k, PTDatValue pVal); 
+    virtual void DelRecord(TKey k);        
+    void Print(std::ostream& out);
 
   protected:
-    void SortData();
+    void SortData();   
+    void InsertSort(PTTabRecord *pMem, int DataCount); 
+    void MergeSort(PTTabRecord *pMem, int DataCount);  
+    void MergeSorter(PTTabRecord *a, PTTabRecord *tmp, int l, int r);
+    void MergeData(PTTabRecord *a, PTTabRecord *tmp, int l, int c, int r);
+    void QuickSort(PTTabRecord *pMem, int DataCount); 
+    void QuickSplit(PTTabRecord *pData, int l, int r);
 
-    void InsertSort(PTTabRecord *pmem,
-            int datacount);
-
-    void MergeSort(PTTabRecord *pmem,
-            int datacount);
-    void MergeSorter(PTTabRecord *a,
-            PTTabRecord *tmp, int l, int r);
-    void MegreData(PTTabRecord *a,
-            PTTabRecord *tmp, int l, int c, int r);
-
-    void QuickSort(PTTabRecord *pmem,
-            int datacount);
-    void QuickSplit(PTTabRecord *pdata,
-            int l, int r);
-
-    TSortMethod SortMethod;
+    TSortMethod SortMethod; 
 };
 
-
-
-#endif
+#endif 

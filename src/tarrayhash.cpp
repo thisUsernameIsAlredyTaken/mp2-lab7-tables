@@ -1,115 +1,92 @@
 #include "tarrayhash.h"
 
-#include "ttabrecord.h"
-
-TArrayHash::TArrayHash(int size, int step)
-      : PRecs(new PTTabRecord[size]),
-        TabSize(size), HashStep(step),
-        PMark(new TTabRecord("", nullptr)) {
-    for (int i = 0; i < TabSize; ++i) {
-        PRecs[i] = PMark;
-    }
+TArrayHash::TArrayHash(int Size, int Step) {
+    pRecs = new PTTabRecord[Size];
+    TabSize = Size;
+    HashStep = Step;
+    pMark = new TTabRecord("", nullptr);
+    for (int i = 0; i < TabSize; ++i)
+        pRecs[i] = pMark;
 }
 
 TArrayHash::~TArrayHash() {
     for (int i = 0; i < TabSize; ++i) {
-        if (PRecs[i] && PRecs[i] != pMark) {
-            delete PRecs[i];
-        }
+        if (pRecs[i] && pRecs[i] != pMark)
+            delete pRecs[i];
     }
-    delete[] PRecs;
-    delete PMark;
+    delete[] pRecs;
+    delete pMark;
 }
 
 PTDatValue TArrayHash::FindRecord(TKey k) {
-    PTDatValue pval = nullptr;
+    PTDatValue pValue = nullptr;
     FreePos = -1;
-    CurrPos = HashFunc(k) & TabSize;
+    CurrPos = HashFunc(k) % TabSize;
     for (int i = 0; i < TabSize; ++i) {
         ++Efficiency;
-        if (!PRecs[CurrPos]) {
+        if (!pRecs[CurrPos])
             break;
-        }
-        if (PRecs[CurrPos] == PMark) {
-            if (FreePos == -1) {
+        if (pRecs[CurrPos] == pMark) {
+            if (FreePos == -1)
                 FreePos = CurrPos;
-            }
-        } else if (PRecs[CurrPos]->Key == k) {
-            pval = PRecs[CurrPos]->pval;
+        }
+        else if (pRecs[CurrPos]->Key == k) {
+            pValue = pRecs[CurrPos]->pValue;
             break;
         }
         CurrPos = GetNextPos(CurrPos);
     }
-
-    return pval;
+    if (!pValue)
+        return nullptr;
+    return pValue;
 }
 
-void TArrayHash::InsRecord(TKey k, PTDatValue pval) {
-    if (DataCount >= TabSize) {
-        throw "no memoty";
-    }
-
-    int currpos = HashFunc(k) % TabSize;
-
-    while (PRecs[CurrPos] != PMark) {
+void TArrayHash::InsRecord(TKey k, PTDatValue pVal) {
+    if (DataCount == TabSize)
+        throw -1;
+    int CurrPos = HashFunc(k) % TabSize;
+    while (pRecs[CurrPos] != pMark) {
         ++Efficiency;
-        currpos = GetNextPos(currpos);
+        CurrPos = GetNextPos(CurrPos);
     }
-    PRecs[currpos] = new TTabRecord(k, pval);
-
+    pRecs[CurrPos] = new TTabRecord(k, pVal);
     ++DataCount;
 }
 
 void TArrayHash::DelRecord(TKey k) {
-    PTDatValue tmp = FindRecord(k);
-    if (tmp == nullptr) {
+    PTDatValue temp = FindRecord(k);
+    if (!temp)
         return;
-    }
-
-    PRecs[CurrPos] = PMark;
+    pRecs[CurrPos] = pMark;
     --DataCount;
 }
 
-void TArrayHash::Reset() {
+int TArrayHash::Reset() {
     CurrPos = 0;
+    return IsTabEnded();
 }
 
-bool TArrayHash::IsFull() {
+int TArrayHash::IsFull() {
     return DataCount == TabSize;
 }
 
-bool TArrayHash::IsTabEnded() {
+int TArrayHash::IsTabEnded() {
     return CurrPos >= TabSize;
 }
 
-bool TArrayHash::GoNext() {
+int TArrayHash::GoNext() {
     if (!IsTabEnded()) {
-        while (++CurrPos < TabSize) {
-            if (PRecs[CurrPos] != nullptr &&
-                    PRecs[CurrPos] != PMark) {
+        while(++CurrPos < TabSize)
+            if (pRecs[CurrPos] && pRecs[CurrPos] != pMark)
                 break;
-            }
-        }
     }
     return IsTabEnded();
 }
 
-int TArrayHash::GetNextPos(int pos) {
-    return (pos + HashStep) % TabSize;
-}
-
 TKey TArrayHash::GetKey() {
-    if (CurrPos < 0 || CurrPos >= TabSize) {
-        return "";
-    } else {
-        return PRecs[CurrPos]->PValue;
-    }
+    return (CurrPos < 0 || CurrPos >= TabSize) ? "" : pRecs[CurrPos]->Key;
 }
 
 PTDatValue TArrayHash::GetValuePtr() {
-    if (CurrPos < 0 || CurrPos >= TabSize) {
-        return nullptr;
-    } else {
-        return PRecs[CurrPos]->PValue;
-    }
+    return (CurrPos < 0 || CurrPos >= TabSize) ? nullptr : pRecs[CurrPos]->pValue;
 }

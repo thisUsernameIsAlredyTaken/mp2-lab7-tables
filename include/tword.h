@@ -9,17 +9,14 @@
 
 class TWord : public TDatValue {
   public:
-    TWord(const std::string &w);
-
-    PTDatValue GetCopy() override;
-
-    std::string GetWord();
-    void SetWord(const std::string &w);
-
-    bool operator==(const TWord &w);
+    TWord(std::string w) : word(w) {}
+    virtual PTDatValue GetCopy(); 
+    std::string GetWord() {return word;}
+    void SetWord(const std::string &w) {word = w;}
+    bool operator==(const TWord &w) {return w.word == word;}
 
   protected:
     std::string word;
 };
 
-#endif
+#endif  

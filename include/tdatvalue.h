@@ -5,7 +5,7 @@
 
 class TDatValue {
   public:
-    virtual PTDatValue GetCopy() = 0;
+    virtual PTDatValue GetCopy() = 0; 
 };
 
-#endif
+#endif  

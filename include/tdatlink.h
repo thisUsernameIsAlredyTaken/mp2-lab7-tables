@@ -7,18 +7,18 @@
 
 class TDatLink : public TRootLink {
   public:
-    TDatLink(PTDatValue pval=nullptr,
-            PTRootLink pnext=nullptr);
-    
-    void SetDatValue(PTDatValue pval) override;
-    PTDatValue GetDatValue() override;
-
-    PTDatLink GetNextDatLink();
+    TDatLink (PTDatValue pVal = nullptr, PTRootLink pN = nullptr) :
+        TRootLink(pN) {
+        pValue = pVal;
+    }
+    void SetDatValue(PTDatValue pVal) { pValue = pVal; }
+    PTDatValue GetDatValue() { return  pValue; }
+    PTDatLink GetNextDatLink() { return  (PTDatLink)pNext; }
 
   protected:
-    PTDatValue PValue;
-
+    PTDatValue pValue;  
+    
     friend class TDatList;
 };
 
-#endif
+#endif  

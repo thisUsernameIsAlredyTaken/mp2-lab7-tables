@@ -4,29 +4,30 @@
 #include "defines.h"
 
 #include "thashtable.h"
+#include "tdatlist.h"
 
 class TListHash : public THashTable {
-  protected:
-    PTDatList *PList;
-    int TabSize;
-    int CurrList;
-
   public:
-    TListHash(int size=TabMaxSize);
+    TListHash(int Size = TabMaxSize); 
     ~TListHash();
-
-    bool IsFull() override;
-
-    TKey GetKey() override;
-    PTDatValue GetValuePtr() override;
-
-    PTDatValue FindRecord(TKey k) override;
-    void InsRecord(TKey k, PTDatValue pval) override;
-    void DelRecord(TKey k);
-
-    void Reset() override;
-    bool IsTabEnded() override;
-    bool GoNext() override;
+    
+    virtual int IsFull(); 
+    
+    virtual TKey GetKey();
+    virtual PTDatValue GetValuePtr();
+    
+    virtual PTDatValue FindRecord(TKey k); 
+    virtual void InsRecord(TKey k, PTDatValue pVal); 
+    virtual void DelRecord(TKey k);        
+    
+    virtual int Reset();   
+    virtual int IsTabEnded(); 
+    virtual int GoNext(); 
+    
+  protected:
+    PTDatList *pList; 
+    int TabSize;      
+    int CurrList;     
 };
 
-#endif
+#endif 

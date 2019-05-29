@@ -5,28 +5,25 @@
 
 #include "tdatvalue.h"
 
+#include <string>
+
 class TTabRecord : public TDatValue {
-  public:
-    TTabRecord(TKey k="", PTDatValue pval=nullptr);
-
-    void SetKey(TKey k);
-    TKey GetKey();
-
+  public:  
+    TTabRecord (TKey k = "", PTDatValue pVal = nullptr) : Key(k), pValue(pVal) {}; 
+    void SetKey(TKey k); 
+    TKey GetKey();  
     void SetValuePtr(PTDatValue p);
-    PTDatValue GetValuePtr();
+    PTDatValue GetValuePtr(); 
+    virtual PTDatValue GetCopy(); 
+    TTabRecord &operator=(TTabRecord &tr);
+    virtual bool operator==(const TTabRecord &tr); 
+    virtual bool operator<(const TTabRecord &tr);  
+    virtual bool operator>(const TTabRecord &tr);  
 
-    PTDatValue GetCopy() override;
-
-    TTabRecord& operator=(TTabRecord &tr);
-
-    virtual bool operator==(const TTabRecord &tr);
-    virtual bool operator<(const TTabRecord &tr);
-    virtual bool operator>(const TTabRecord &tr);
-
-  protected:
-    TKey Key;
-    PTDatValue PValue;
-
+  protected:    
+    TKey Key;   
+    PTDatValue pValue;   
+    
     friend class TArrayTable;
     friend class TScanTable;
     friend class TSortTable;
@@ -36,5 +33,4 @@ class TTabRecord : public TDatValue {
     friend class TListHash;
 };
 
-
-#endif
+#endif  

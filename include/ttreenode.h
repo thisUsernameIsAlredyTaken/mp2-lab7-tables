@@ -5,23 +5,19 @@
 
 #include "ttabrecord.h"
 
-class TTreeNode : public TTabRecord {
+class TTreeNode: public TTabRecord {
   public:
-    TTreeNode(TKey k="",
-            PTDatValue pval=nullptr,
-            PTTreeNode pl=nullptr,
-            PTTreeNode pr=nullptr);
-
-    PTTreeNode GetLeft();
-    PTTreeNode GetRight();
-
-    PTDatValue GetCopy() override;
+    TTreeNode(TKey k = "", PTDatValue pVal = nullptr, PTTreeNode pL = nullptr,
+            PTTreeNode pR = nullptr): TTabRecord(k,pVal), pLeft(pL), pRight(pR) {};
+    PTTreeNode GetLeft(); 
+    PTTreeNode GetRight(); 
+    virtual PTDatValue GetCopy();  
 
   protected:
-    PTTreeNode PLeft, PRight;
+    PTTreeNode pLeft, pRight; 
 
     friend class TTreeTable;
     friend class TBalanceTree;
 };
 
-#endif
+#endif 

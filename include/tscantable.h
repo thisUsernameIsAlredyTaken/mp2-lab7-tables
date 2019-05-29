@@ -7,13 +7,11 @@
 
 class TScanTable : public TArrayTable {
   public:
-    TScanTable(int size=TabMaxSize);
-
-    PTDatValue FindRecord(TKey k) override;
-    virtual void InsRecord(TKey k,
-            PTDatValue pval) override;
-    void DelRecord(TKey k) override;
+    TScanTable(int Size = TabMaxSize): TArrayTable(Size) {};
+    
+    virtual PTDatValue FindRecord(TKey k); 
+    virtual void InsRecord(TKey k, PTDatValue pVal); 
+    virtual void DelRecord(TKey k); 
 };
 
-
-#endif
+#endif 

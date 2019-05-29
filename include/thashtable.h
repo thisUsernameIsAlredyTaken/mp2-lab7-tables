@@ -6,12 +6,11 @@
 #include "ttable.h"
 
 class THashTable : public TTable {
-  public:
-    THashTable();
-
   protected:
-    virtual unsigned long HashFunc(TKey k);
+    virtual unsigned long HashFunc(TKey key); 
+
+  public:
+    THashTable() : TTable() {} 
 };
 
-
-#endif
+#endif 

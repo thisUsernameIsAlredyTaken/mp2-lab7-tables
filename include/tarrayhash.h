@@ -7,32 +7,30 @@
 
 class TArrayHash : public THashTable {
   public:
-    TArrayHash(int size=TabMaxSize,
-            int step=TabHashStep);
+    TArrayHash(int Size = TabMaxSize, int Step = TabHashStep);
     ~TArrayHash();
 
-    bool IsFull() override;
+    virtual int IsFull();
 
-    TKey GetKey() override;
-    PTDatValue GetValuePtr() override;
+    virtual TKey GetKey();
+    virtual PTDatValue GetValuePtr();
 
-    PTDatValue FindRecord(const TKey &k) override;
-    void InsRecord(const TKey &k, PTDatValue pval) override;
-    void DelRecord(const TKey &k) override;
+    virtual PTDatValue FindRecord(TKey k);
+    virtual void InsRecord(TKey k, PTDatValue pVal);
+    virtual void DelRecord(TKey k);
 
-    void Reset() override;
-    bool IsTabEnded() override;
-    bool GoNext() override;
+    virtual int Reset();
+    virtual int IsTabEnded();
+    virtual int GoNext() ;
 
   protected:
-    int GetNextPos(int pos);
-
-    PTTabRecord *PRecs;
+    PTTabRecord *pRecs;
     int TabSize;
     int HashStep;
     int FreePos;
     int CurrPos;
-    PTTabRecord PMark;
+    PTTabRecord pMark;
+    int GetNextPos(int pos) { return (pos + HashStep) % TabSize; };
 };
 
 #endif

@@ -7,33 +7,32 @@
 
 class TArrayTable : public TTable {
   public:
-    TArrayTable(int size=TabMaxSize);
-    ~TArrayTable();
+    TArrayTable(int Size = TabMaxSize);
+    ~TArrayTable() {}
 
-    bool IsFull() override;
+    virtual int IsFull();
     int GetTabSize();
 
-    TKey GetKey() override;
-    PTDatValue GetValuePtr() override;
+    virtual TKey GetKey();
+    virtual PTDatValue GetValuePtr();
     virtual TKey GetKey(TDataPos mode);
-    virtual PTDatValue GetDatValuePtr(TDataPos mode);
+    virtual PTDatValue GetValuePtr(TDataPos mode);
 
-    virtual PTDatValue FindRecord(const TKey &k) = 0;
-    virtual void InsRecord(const TKey &k, PTDatValue pval) = 0;
-    virtual void DelRecord(const TKey &k) = 0;
+    virtual PTDatValue FindRecord(TKey k) = 0;
+    virtual void InsRecord(TKey k, PTDatValue pVal) = 0;
+    virtual void DelRecord(TKey k) = 0;
 
-    void Reset() override;
-    bool IsTabEnded() override;
-    bool GoNext() override;
+    virtual int Reset();
+    virtual int IsTabEnded();
+    virtual int GoNext();
 
-    virtual void SetCurrentPos(int pos);
+    virtual int SetCurrentPos (int pos);
     int GetCurrentPos();
 
   protected:
-    PTTabRecord *PRecs;
+    PTTabRecord *pRecs;
     int TabSize;
     int CurrPos;
-
     friend class TSortTable;
 };
 

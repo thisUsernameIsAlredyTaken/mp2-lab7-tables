@@ -1,18 +1,14 @@
 #include "tarraytable.h"
 
-TArrayTable::~TArrayTable() {}
-
-TArrayTable::TArrayTable(int size) {
-    PRecs = new PTTabRecord[size];
-    for (int i = 0; i < size; ++i) {
-        PRecs[i] = nullptr;
-    }
-    TabSize = size;
-    DataCount = 0;
-    CurrPos = 0;
+TArrayTable::TArrayTable(int Size) {
+    pRecs = new PTTabRecord[Size];
+    for (int i = 0; i < Size; ++i)
+        pRecs[i] = nullptr;
+    TabSize = Size;
+    DataCount = CurrPos = 0;
 }
 
-bool TArrayTable::IsFull() {
+int TArrayTable::IsFull() {
     return DataCount >= TabSize;
 }
 
@@ -20,77 +16,72 @@ int TArrayTable::GetTabSize() {
     return TabSize;
 }
 
+TKey TArrayTable::GetKey() {
+    return GetKey(CURRENT_POS);
+}
+
 TKey TArrayTable::GetKey(TDataPos mode) {
     int pos = -1;
     if (!IsEmpty()) {
-        switch (mode) {
-          case FIRST_POS:
+        switch(mode) {
+        case FIRST_POS:
             pos = 0;
             break;
-          case LAST_POS:
+        case LAST_POS:
             pos = DataCount - 1;
             break;
-          case CURRENT_POS:
-          default:
+        default:
             pos = CurrPos;
             break;
         }
     }
-    if (pos == -1) {
+    if (pos == -1)
         return "";
-    } else {
-        return PRecs[pos]->Key;
-    }
+    return pRecs[pos]->Key;
 }
 
 PTDatValue TArrayTable::GetValuePtr() {
-    return GetDatValuePtr(CURRENT_POS);
+    return GetValuePtr(CURRENT_POS);
 }
 
-PTDatValue TArrayTable::GetDatValuePtr(TDataPos mode) {
+PTDatValue TArrayTable::GetValuePtr(TDataPos mode) {
     int pos = -1;
     if (!IsEmpty()) {
-        switch (mode) {
-          case FIRST_POS:
+        switch(mode) {
+        case FIRST_POS:
             pos = 0;
             break;
-          case LAST_POS:
+        case LAST_POS:
             pos = DataCount - 1;
             break;
-          case CURRENT_POS:
-          default:
+        default:
             pos = CurrPos;
             break;
         }
     }
-    if (pos == -1) {
+    if (pos == -1)
         return nullptr;
-    } else {
-        return PRecs[pos]->PValue;
-    }
+    return pRecs[pos]->pValue;
 }
 
-void TArrayTable::Reset() {
+int TArrayTable::Reset() {
     CurrPos = 0;
-}
-
-bool TArrayTable::IsTabEnded() {
-    return CurrPos >= DataCount;
-}
-
-bool TArrayTable::GoNext() {
-    if (!IsTabEnded()) {
-        ++CurrPos;
-    }
     return IsTabEnded();
 }
 
-void TArrayTable::SetCurrentPos(int pos) {
-    if (pos >= 0 && pos < DataCount) {
-        CurrPos = pos;
-    } else {
-        CurrPos = 0;
-    }
+int TArrayTable::IsTabEnded() {
+    return CurrPos >= DataCount;
+}
+
+int TArrayTable::GoNext() {
+    if (!IsTabEnded())
+        ++CurrPos;
+    return IsTabEnded();
+}
+
+int TArrayTable::SetCurrentPos(int pos) {
+    CurrPos = (pos > -1 && pos < DataCount) ? pos : 0;
+    return IsTabEnded();
 }
 
 int TArrayTable::GetCurrentPos() {

@@ -3,19 +3,19 @@
 
 #include "defines.h"
 
+#include "tbalancenode.h"
 #include "ttreetable.h"
 
 class TBalanceTree : public TTreeTable {
   public:
-    TBalanceTree();
-
-    void InsRecord(TKey k, PTDatValue pval) override;
+    TBalanceTree() : TTreeTable() {} 
+    
+    virtual void InsRecord(TKey k, PTDatValue pVal); 
 
   protected:
-    int InsBalanceTree(PTTreeNode &pnode,
-            TKey k, PTDatValue pval);
-    int LeftTreeBalancing(PTBalanceNode &pnode);
-    int RightTreeBalancing(PTBalanceNode &pnode);
+    int InsBalanceTree(PTTreeNode &pNode_, TKey k, PTDatValue pVal);
+    int LeftTreeBalancing(PTBalanceNode &pNode); 
+    int RightTreeBalancing(PTBalanceNode &pNode);
 };
 
-#endif
+#endif 

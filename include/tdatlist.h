@@ -3,41 +3,44 @@
 
 #include "defines.h"
 
+#include "tdatlink.h"
+
 class TDatList {
   public:
     TDatList();
-    ~TDatList();
+    ~TDatList() { DelList(); }
+    
+    PTDatValue GetDatValue(TLinkPos mode = CURRENT); 
+    virtual int IsEmpty() { return pFirst == pStop; } 
+    int GetListLength() { return ListLen; }       
+    
+    int SetCurrentPos(int pos);          
+    int GetCurrentPos();       
 
-    PTDatValue GetDatValue(TLinkPos mode=CURRENT);
-    virtual bool IsEmpty();
-    int GetListLength();
-
-    void SetCurrentPos(int pos);
-    int GetCurrentPos();
-    virtual void Reset();
-    virtual bool IsListEnded();
-    bool GoNext();
-
-    virtual void InsFirst(PTDatValue pval=nullptr);
-    virtual void InsLast(PTDatValue pval=nullptr);
-    virtual void InsCurrent(PTDatValue pval=nullptr);
-
-    virtual void DelFirst();
-    virtual void DelCurrent();
-    virtual void DelList();
+    virtual int Reset();             
+    virtual int IsListEnded(); 
+    int GoNext();                    
+                
+    
+    virtual void InsFirst(PTDatValue pVal = nullptr); 
+    virtual void InsLast(PTDatValue pVal = nullptr); 
+    virtual void InsCurrent(PTDatValue pVal = nullptr); 
+    
+    virtual void DelFirst();    
+    virtual void DelCurrent();    
+    virtual void DelList();    
 
   protected:
-    PTDatLink GetLink(PTDatValue pval=nullptr,
-            PTDatLink pl=nullptr);
-    void DelLink(PTDatLink pl);
+    PTDatLink GetLink(PTDatValue pVal = nullptr, PTDatLink pLink = nullptr);
+    void DelLink (PTDatLink pLink);   
 
-    PTDatLink PFirst;
-    PTDatLink PLast;
-    PTDatLink PCurrLink;
-    PTDatLink PPrevLink;
-    PTDatLink PStop;
-    int CurrPos;
+    PTDatLink pFirst;    
+    PTDatLink pLast;     
+    PTDatLink pCurrLink; 
+    PTDatLink pPrevLink; 
+    PTDatLink pStop;     
+    int CurrPos;         
     int ListLen;
 };
 
-#endif
+#endif  
