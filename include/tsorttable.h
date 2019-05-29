@@ -18,10 +18,10 @@ class TSortTable : public TScanTable {
     TSortMethod GetSortMethod();
     void SetSortMethod(TSortMethod sm);
 
-    PTDatValue FindRecord(const TKey &k) override;
-    void InsRecord(const TKey &k,
+    PTDatValue FindRecord(TKey k) override;
+    void InsRecord(TKey k,
             PTDatValue pval) override;
-    void DelRecord(const TKey &k) override;
+    void DelRecord(TKey k) override;
 
     void Print(std::ostream &os);
 

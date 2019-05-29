@@ -10,7 +10,7 @@ class THashTable : public TTable {
     THashTable();
 
   protected:
-    virtual unsigned long HashFunc(const TKey &k);
+    virtual unsigned long HashFunc(TKey k);
 };
 
 

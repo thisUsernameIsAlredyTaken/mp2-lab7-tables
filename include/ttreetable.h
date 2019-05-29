@@ -15,9 +15,9 @@ class TTreeTable : public TTable {
 
     bool IsFull() override;
 
-    PTDatValue FindRecord(const TKey &k) override;
-    void InsRecord(const TKey &k, PTDatValue pval) override;
-    void DelRecord(const TKey &k) override;
+    PTDatValue FindRecord(TKey k) override;
+    void InsRecord(TKey k, PTDatValue pval) override;
+    void DelRecord(TKey k) override;
 
     void Print(PTTreeNode pNode, int depth=0);
     void Print();

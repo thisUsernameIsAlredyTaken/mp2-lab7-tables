@@ -9,11 +9,11 @@ class TBalanceTree : public TTreeTable {
   public:
     TBalanceTree();
 
-    void InsRecord(const TKey &k, PTDatValue pval) override;
+    void InsRecord(TKey k, PTDatValue pval) override;
 
   protected:
     int InsBalanceTree(PTTreeNode &pnode,
-            const TKey &k, PTDatValue pval);
+            TKey k, PTDatValue pval);
     int LeftTreeBalancing(PTBalanceNode &pnode);
     int RightTreeBalancing(PTBalanceNode &pnode);
 };

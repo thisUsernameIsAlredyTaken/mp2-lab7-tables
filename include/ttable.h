@@ -19,10 +19,10 @@ class TTable {
     virtual TKey GetKey() = 0;
     virtual PTDatValue GetValuePtr() = 0;
 
-    virtual PTDatValue FindRecord(const TKey &k) = 0;
-    virtual void InsRecord(const TKey &k,
+    virtual PTDatValue FindRecord(TKey k) = 0;
+    virtual void InsRecord(TKey k,
             PTDatValue pval) = 0;
-    virtual void DelRecord(const TKey &k) = 0;
+    virtual void DelRecord(TKey k) = 0;
 
     virtual void Reset() = 0;
     virtual bool IsTabEnded() = 0;
