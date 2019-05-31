@@ -31,5 +31,5 @@ class TTreeTable : public TTable {
     PTTreeNode *ppRef;
     PTTreeNode pCurrent;
     int currPos;
-    std::stack<PTTreeNode> St;
+    std::stack<PTTreeNode> st;
 };
