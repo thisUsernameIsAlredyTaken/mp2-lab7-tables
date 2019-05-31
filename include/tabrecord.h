@@ -21,14 +21,13 @@ class TTabRecord : public TDatValue {
     void SetValuePtr(PTDatValue p);
     PTDatValue GetValuePtr(void);
 
-  private:
+  protected:
     PTDatValue pValue;
     TKey key;
 
     friend class TArrayTable;
     friend class TScanTable;
     friend class TSortTable;
-    friend class TTreeNode;
     friend class TTreeTable;
     friend class TArrayHash;
     friend class TListHash;

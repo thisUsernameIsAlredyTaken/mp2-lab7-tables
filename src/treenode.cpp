@@ -16,7 +16,12 @@ PTDatValue TTreeNode::GetCopy() const {
         pR = (PTTreeNode)pRight->GetCopy();
     }
 
-    return new TTreeNode(key, pValue, pL, pR);
+    if (pValue == nullptr) {
+        return new TTreeNode(key, nullptr, pL, pR);
+    } else {
+        return new TTreeNode(key, pValue->GetCopy(),
+                pL, pR);
+    }
 }
 
 PTTreeNode TTreeNode::GetLeft() const {
