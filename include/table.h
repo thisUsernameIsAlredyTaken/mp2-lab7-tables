@@ -20,6 +20,10 @@ class TTable {
     virtual bool IsTabEnded() const = 0;
     virtual bool GoNext() = 0;
 
+    void ResetEfficiency() {
+        efficiency = 0;
+    }
+
     int GetDataCount() const;
     int GetEfficiency() const;
     bool IsEmpty() const;

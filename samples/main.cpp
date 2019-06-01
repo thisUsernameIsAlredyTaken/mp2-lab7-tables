@@ -7,27 +7,187 @@
 #include "word.h"
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <string>
 
 using namespace std;
 
-constexpr int TABSIZE = 100;
+enum TabType {SCAN = 1, SORT, TREE, BALANCE, HASHARR, HASHLIST} type;
 
-PTScanTable pTab = nullptr;
-string *pKeys = nullptr;
-int dataCount = 0, mem;
+int tabSize;
+int dataCount;
+PTTable tab = nullptr;
+string* keys;
 
+
+void init();
+void destr();
+string* generateKeys(int count);
+PTTable createScan();
+PTTable createSort();
+PTTable createTree();
+PTTable createBalance();
+PTTable createHasharr();
+PTTable createHashlist();
+void fillTable();
+void printAvgs();
 
 int main() {
-    TScanTable scan(TABSIZE);
-    TSortTable sort(TABSIZE);
-    TTreeTable tree;
-    TBalanceTree baltree;
-    TArrayHash arrhash(TABSIZE);
-    TListHash listhash(TABSIZE);
-
-    
-
-
+    srand(time(nullptr));
+    init();
+    destr();
     return 0;
 }
+
+void init() {
+    int choise;
+    cout << "Choose table" << endl <<
+            "1. Scan table" << endl <<
+            "2. Sort table" << endl <<
+            "3. Tree table" << endl <<
+            "4. Balance tree table" << endl <<
+            "5. Hash array table" << endl <<
+            "6. Hash list table" << endl;
+    cin >> choise;
+    type = (TabType)choise;
+
+    switch (type) {
+      case SCAN:
+        /* cout << "SCAN" << endl; */
+        tab = createScan();
+        break;
+      case SORT:
+        /* cout << "SORT" << endl; */
+        tab = createSort();
+        break;
+      case TREE:
+        /* cout << "TREE" << endl; */
+        tab = createTree();
+        break;
+      case BALANCE:
+        tab = createBalance();
+        /* cout << "BALANCE" << endl; */
+        break;
+      case HASHARR:
+        /* cout << "HASHARR" << endl; */
+        tab = createHasharr();
+        break;
+      case HASHLIST:
+        tab = createHashlist();
+        /* cout << "HASHLIST" << endl; */
+        break;
+      default:
+        exit(-1);
+        break;
+    }
+
+    fillTable();
+
+    printAvgs();
+}
+
+
+void destr() {
+    delete tab;
+}
+
+string* generateKeys(int c) {
+    string *res = new string[c];
+
+    for (int i = 0; i < c; ++i) {
+        res[i] = string("000000");
+        for (int j = 0; j < 6; ++j) {
+            res[i][j] = '0' + rand() % 10;
+        }
+    }
+
+    return res;
+}
+
+PTTable createScan() {
+    cout << "Enter table size:" << endl;
+    cin >> tabSize;
+
+    tab = new TScanTable(tabSize);
+
+    return tab;
+}
+
+PTTable createSort() {
+    cout << "Enter table size:" << endl;
+    cin >> tabSize;
+
+    tab = new TSortTable(tabSize);
+
+    return tab;
+}
+
+PTTable createTree() {
+    tab = new TTreeTable;
+
+    return tab;
+}
+
+PTTable createBalance() {
+    tab = new TBalanceTree;
+
+    return tab;
+}
+
+PTTable createHasharr() {
+    cout << "Enter table size:" << endl;
+    cin >> tabSize;
+
+    tab = new TArrayHash(tabSize);
+
+    return tab;
+}
+
+PTTable createHashlist() {
+    cout << "Enter table size:" << endl;
+    cin >> tabSize;
+
+    tab = new TListHash(tabSize);
+
+    return tab;
+}
+
+void fillTable() {
+    cout << "Enter records count:" << endl;
+    cin >> dataCount;
+
+    keys = generateKeys(dataCount);
+
+    for (int i = 0; i < dataCount; ++i) {
+        tab->InsRecord(keys[i], nullptr);
+    }
+}
+
+void printAvgs() {
+    double insAvg, findAvg, delAvg;
+    string k("000000");
+
+    for (int i = 0; i < 6; ++i) {
+        k[i] = '0' + rand() % 10;
+    }
+
+    tab->ResetEfficiency();
+    tab->InsRecord(k, nullptr);
+    insAvg = (double)tab->GetEfficiency();
+
+    tab->ResetEfficiency();
+    tab->FindRecord(k);
+    findAvg = (double)tab->GetEfficiency();
+
+    tab->ResetEfficiency();
+    tab->DelRecord(k);
+    delAvg = (double)tab->GetEfficiency();
+
+    cout << "Efficiency" << endl <<
+            "Insert: " << insAvg << endl <<
+            "Find:   " << findAvg << endl <<
+            "Delete: " << delAvg << endl;
+}
+
+
