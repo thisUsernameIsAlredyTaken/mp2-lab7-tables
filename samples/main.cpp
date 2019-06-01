@@ -31,7 +31,7 @@ PTTable createBalance();
 PTTable createHasharr();
 PTTable createHashlist();
 void fillTable();
-void printAvgs();
+void printAvgs(int count);
 
 int main() {
     srand(time(nullptr));
@@ -84,7 +84,10 @@ void init() {
 
     fillTable();
 
-    printAvgs();
+    int iters;
+    cout << "How many iterations: ";
+    cin >> iters;
+    printAvgs(iters);
 }
 
 
@@ -106,7 +109,7 @@ string* generateKeys(int c) {
 }
 
 PTTable createScan() {
-    cout << "Enter table size:" << endl;
+    cout << "Enter table size: ";
     cin >> tabSize;
 
     tab = new TScanTable(tabSize);
@@ -115,7 +118,7 @@ PTTable createScan() {
 }
 
 PTTable createSort() {
-    cout << "Enter table size:" << endl;
+    cout << "Enter table size: ";
     cin >> tabSize;
 
     tab = new TSortTable(tabSize);
@@ -136,7 +139,7 @@ PTTable createBalance() {
 }
 
 PTTable createHasharr() {
-    cout << "Enter table size:" << endl;
+    cout << "Enter table size: ";
     cin >> tabSize;
 
     tab = new TArrayHash(tabSize);
@@ -145,7 +148,7 @@ PTTable createHasharr() {
 }
 
 PTTable createHashlist() {
-    cout << "Enter table size:" << endl;
+    cout << "Enter table size: ";
     cin >> tabSize;
 
     tab = new TListHash(tabSize);
@@ -154,7 +157,7 @@ PTTable createHashlist() {
 }
 
 void fillTable() {
-    cout << "Enter records count:" << endl;
+    cout << "Enter records count: ";
     cin >> dataCount;
 
     keys = generateKeys(dataCount);
@@ -164,25 +167,34 @@ void fillTable() {
     }
 }
 
-void printAvgs() {
-    double insAvg, findAvg, delAvg;
+void printAvgs(int c) {
+    if (c < 1) {
+        exit(-1);
+    }
+    double insAvg = 0.0, findAvg = 0.0, delAvg = 0.0;
     string k("000000");
 
     for (int i = 0; i < 6; ++i) {
         k[i] = '0' + rand() % 10;
     }
 
-    tab->ResetEfficiency();
-    tab->InsRecord(k, nullptr);
-    insAvg = (double)tab->GetEfficiency();
+    for (int i = 0; i < c; ++i) {
+        tab->ResetEfficiency();
+        tab->InsRecord(k, nullptr);
+        insAvg += (double)tab->GetEfficiency();
 
-    tab->ResetEfficiency();
-    tab->FindRecord(k);
-    findAvg = (double)tab->GetEfficiency();
+        tab->ResetEfficiency();
+        tab->FindRecord(k);
+        findAvg += (double)tab->GetEfficiency();
 
-    tab->ResetEfficiency();
-    tab->DelRecord(k);
-    delAvg = (double)tab->GetEfficiency();
+        tab->ResetEfficiency();
+        tab->DelRecord(k);
+        delAvg += (double)tab->GetEfficiency();
+    }
+
+    insAvg /= c;
+    findAvg /= c;
+    delAvg /= c;
 
     cout << "Efficiency" << endl <<
             "Insert: " << insAvg << endl <<
