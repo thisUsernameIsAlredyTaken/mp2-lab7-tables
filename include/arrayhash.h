@@ -23,12 +23,12 @@ class TArrayHash : public THashTable {
     virtual bool GoNext() override;
 
   protected:
-    int GetNextPos(int pos){return (pos+HashStep)%TabSize;};
-    
+    int GetNextPos(int pos);
+
     PTTabRecord *pRecs;
-    int TabSize;
-    int HashStep;
-    int FreePos;
-    int CurrPos;
+    int tabSize;
+    int hashStep;
+    int freePos;
+    int currPos;
     PTTabRecord pMark;
 };

@@ -17,15 +17,79 @@ bool TTreeTable::IsFull() const {
 }
 
 PTDatValue TTreeTable::FindRecord(TKey k) {
-
+    PTTreeNode p = pRoot;
+    ppRef = &pRoot;
+    while (p != nullptr) {
+        ++efficiency;
+        if (p->GetKey() == k) {
+            return p;
+        }
+        if (p->GetKey() > k) {
+            ppRef = &p->pLeft;
+            p = p->GetLeft();
+        } else {
+            ppRef = &p->pRight;
+            p = p->GetRight();
+        }
+    }
+    ++efficiency;
+    return nullptr;
 }
 
 void TTreeTable::InsRecord(TKey k, PTDatValue pVal) {
+    if (FindRecord(k) == nullptr) {
+        throw -1;
+    }
 
+    *ppRef = new TTreeNode(k, pVal);
+    ++dataCount;
 }
 
 void TTreeTable::DelRecord(TKey k) {
-
+    if (FindRecord(k) == nullptr) {
+        return;
+    }
+    if ((*ppRef)->GetLeft() == nullptr) {
+        PTTreeNode p = *ppRef;
+        (*ppRef) = (*ppRef)->GetRight();
+        delete p;
+    } else if ((*ppRef)->GetRight() == nullptr) {
+        PTTreeNode p = *ppRef;
+        (*ppRef) = (*ppRef)->GetLeft();
+        delete p;
+    } else {
+        PTTreeNode l = (*ppRef)->GetLeft();
+        PTTreeNode r = (*ppRef)->GetRight();
+        PTTreeNode oldL = l;
+        PTTreeNode oldR = r;
+        while (true) {
+            ++efficiency;
+            if (l->GetRight() == nullptr) {
+                oldL->pRight = l->GetLeft();
+                l->pRight = (*ppRef)->GetRight();
+                if (l != oldL) {
+                    l->pLeft = (*ppRef)->GetLeft();
+                }
+                delete (*ppRef);
+                (*ppRef) = l;
+                break;
+            } else if (r->GetLeft() == nullptr) {
+                oldR->pLeft = r->GetRight();
+                r->pLeft = (*ppRef)->GetLeft();
+                if (r != oldR) {
+                    r->pRight = (*ppRef)->GetRight();
+                }
+                delete (*ppRef);
+                (*ppRef) = r;
+                break;
+            }
+            oldL = l;
+            oldR = r;
+            l = l->GetRight();
+            r = r->GetLeft();
+        }
+    }
+    --dataCount;
 }
 
 TKey TTreeTable::GetKey() const {
@@ -79,6 +143,9 @@ bool TTreeTable::GoNext() {
     return IsTabEnded();
 }
 
-void TTreeTable::DeleteTreeTab(PTTreeNode) {
-
+void TTreeTable::DeleteTreeTab(PTTreeNode p) {
+    if (p != nullptr) {
+        DeleteTreeTab(p->GetLeft());
+        DeleteTreeTab(p->GetRight());
+    }
 }
