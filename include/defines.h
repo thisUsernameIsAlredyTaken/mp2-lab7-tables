@@ -29,4 +29,5 @@ class TListHash;    using PTListHash    = TListHash*;
 class TDatList;     using PTDatList     = TDatList*;
 class TDatLink;     using PTDatLink     = TDatLink*;
 class TRootLink;    using PTRootLink    = TRootLink*;
+class TWord;        using PTWord        = TWord*;
 
