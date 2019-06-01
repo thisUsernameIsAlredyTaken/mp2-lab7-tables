@@ -2,11 +2,13 @@
 
 #include <string>
 
-constexpr int TabMaxSize = 25;
+constexpr int TabMaxSize  = 25;
+constexpr int TabMaxSize  = 25;
+constexpr int TabHashStep = 5;
 
 constexpr int BalOk    =  0;
 constexpr int BalLeft  = -1;
-constexpr int BalRitht =  1;
+constexpr int BalRight =  1;
 
 enum TDataPos    {FIRST_POS, CURRENT_POS, LAST_POS};
 enum TSortMethod {INSERT_SORT, MERGE_SORT, QUIQ_SORT};
