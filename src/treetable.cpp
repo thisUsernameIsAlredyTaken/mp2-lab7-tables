@@ -38,7 +38,7 @@ PTDatValue TTreeTable::FindRecord(TKey k) {
 
 void TTreeTable::InsRecord(TKey k, PTDatValue pVal) {
     if (FindRecord(k) == nullptr) {
-        throw -1;
+        return;
     }
 
     *ppRef = new TTreeNode(k, pVal);

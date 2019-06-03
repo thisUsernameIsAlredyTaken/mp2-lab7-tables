@@ -17,11 +17,11 @@ PTDatValue TScanTable::FindRecord(TKey k) {
 
 void TScanTable::InsRecord(TKey k, PTDatValue pVal) {
     if (IsFull()) {
-        throw -1;
+        return;
     }
 
     if (FindRecord(k) != nullptr) {
-        throw -1;
+        return;
     }
 
     currPos = dataCount++;

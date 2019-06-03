@@ -26,14 +26,14 @@ bool TListHash::IsFull() const {
 
 TKey TListHash::GetKey() const {
     if (IsTabEnded()) {
-        throw -1;
+        return "";
     }
     return ((PTTabRecord)pList[currList]->GetDatValue())->GetKey();
 }
 
 PTDatValue TListHash::GetValuePtr() const {
     if (IsTabEnded()) {
-        throw -1;
+        return nullptr;
     }
     return ((PTTabRecord)pList[currList]->GetDatValue())->GetValuePtr();
 }

@@ -17,27 +17,27 @@ PTDatValue TDatList::GetDatValue(TLinkPos mode) const {
     switch (mode) {
       case TLinkPos::CURRENT:
         if (pCurrLink == nullptr) {
-            throw -1;
+            return nullptr;
         }
         return pCurrLink->GetDatValue();
       case TLinkPos::FIRST:
         if (pFirst == nullptr) {
-            throw -1;
+            return nullptr;
         }
         return pFirst->GetDatValue();
       case TLinkPos::LAST:
         if (pLast == nullptr) {
-            throw -1;
+            return nullptr;
         }
         return pLast->GetDatValue();
       default:
-        throw -1;
+        return nullptr;
     }
 }
 
 void TDatList::SetCurrentPos(int pos) {
     if (pos < 0 || pos > listLen) {
-        throw -1;
+        return;
     }
     pCurrLink = pFirst;
     pPrevLink = pStop;

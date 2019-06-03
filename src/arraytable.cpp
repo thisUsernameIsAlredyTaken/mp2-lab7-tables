@@ -29,7 +29,7 @@ PTDatValue TArrayTable::GetValuePtr() const {
 
 TKey TArrayTable::GetKey(TDataPos mode) const {
     if (dataCount <= 0) {
-        throw -1;
+        return "";
     }
 
     switch (mode) {
@@ -48,7 +48,7 @@ TKey TArrayTable::GetKey(TDataPos mode) const {
 
 PTDatValue TArrayTable::GetValuePtr(TDataPos mode) const {
     if (dataCount <= 0) {
-        throw -1;
+        return nullptr;
     }
 
     switch (mode) {

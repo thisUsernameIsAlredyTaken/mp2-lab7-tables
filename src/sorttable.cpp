@@ -67,11 +67,11 @@ PTDatValue TSortTable::FindRecord(TKey k) {
 
 void TSortTable::InsRecord(TKey k, PTDatValue pVal) {
     if (IsFull()) {
-        throw -1;
+        return;
     }
 
     if (FindRecord(k) != nullptr) {
-        throw -1;
+        return;
     }
 
     pRecs[dataCount++] = new TTabRecord(k, pVal);
@@ -96,7 +96,7 @@ void TSortTable::DelRecord(TKey k) {
 
 void TSortTable::InsertSort(PTTabRecord *pMem, int dataCount) {
     if (dataCount < 1) {
-        throw -1;
+        return;
     }
 
     PTTabRecord pR;

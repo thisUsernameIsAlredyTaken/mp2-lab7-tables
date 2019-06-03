@@ -63,7 +63,7 @@ void TArrayHash::InsRecord(TKey k, PTDatValue pVal) {
         }
         pos = GetNextPos(pos);
     }
-    throw -1;
+    return;
 }
 
 void TArrayHash::DelRecord(TKey k) {
